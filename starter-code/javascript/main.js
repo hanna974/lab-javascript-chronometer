@@ -30,11 +30,11 @@ function printSeconds() {
     secUni.innerHTML = twoDigitsSeconde[1];
 }
 
-function printMilliseconds() {}
+// function printMilliseconds() {}
 
-function printSplit() {}
+// function printSplit() {}
 
-function clearSplits() {}
+// function clearSplits() {}
 
 function setStopBtn() {
     chronometer.stopClick()
@@ -42,8 +42,8 @@ function setStopBtn() {
 }
 
 function setStartBtn() {
-    chronometer.startClick()
-    printTime()
+    chronometer.startClick();
+    printTime();
 }
 
 function setSplitBtn() {
