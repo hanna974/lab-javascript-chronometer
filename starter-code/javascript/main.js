@@ -8,9 +8,12 @@ var secUni = document.getElementById("secUni");
 var milDec = document.getElementById("milDec");
 var milUni = document.getElementById("milUni");
 
+var intervalId1;
+var intervalId2;
+
 function printTime() {
-    printMinutes();
-    printSeconds();
+    intervalId1 = setInterval(printMinutes, 1000);
+    intervalId2 = setInterval(printSeconds, 1000);
 }
 
 function printMinutes() {
@@ -33,37 +36,47 @@ function printSplit() {}
 
 function clearSplits() {}
 
-function setStopBtn() {}
+function setStopBtn() {
+    chronometer.stopClick()
+    clearInterval(intervalId1, intervalId2);
+}
 
-function setSplitBtn() {}
+function setStartBtn() {
+    chronometer.startClick()
+    printTime()
+}
 
-function setStartBtn() {}
+function setSplitBtn() {
+    let li = document.createElement("li");
+    li.textContent = `${minDec.innerHTML}${minUni.innerHTML}:${secDec.innerHTML}${secUni.innerHTML}`;
+    document.getElementById("splits").appendChild(li);
+}
 
-function setResetBtn() {}
+function setResetBtn() {
+    chronometer.resetClick();
+    document.getElementById("splits").innerHTML = "";
+}
 
-// Start/Stop Button
 btnLeft.addEventListener("click", function () {
     btnLeft.classList.toggle("start");
     btnLeft.classList.toggle("stop");
-    if (btnLeft.classList.contains("start")) {
-        btnLeft.innerHTML = "START";
-        chronometer.startClick();
-    }
-    if (btnLeft.classList.contains("stop")) {
-        btnLeft.innerHTML = "STOP";
-        chronometer.stopClick();
-    }
-    printTime();
-});
-
-// Reset/Split Button
-btnRight.addEventListener("click", function () {
     btnRight.classList.toggle("reset");
     btnRight.classList.toggle("split");
-    if (btnRight.classList.contains("reset")) {
+    if (btnLeft.classList.contains("start")) {
+        btnLeft.innerHTML = "START";
         btnRight.innerHTML = "RESET";
-    }
-    if (btnRight.classList.contains("split")) {
+        setStopBtn();
+    } else {
+        btnLeft.innerHTML = "STOP";
         btnRight.innerHTML = "SPLIT";
+        setStartBtn();
+    }
+});
+
+btnRight.addEventListener("click", function () {
+    if (btnRight.classList.contains("split")) {
+        setSplitBtn();
+    } else {
+        setResetBtn();
     }
 });
